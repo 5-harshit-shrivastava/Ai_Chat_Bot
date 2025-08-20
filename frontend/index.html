@@ -99,14 +99,12 @@
         </div>
     </div>
 
-
     <script src="widget.js"></script>
     <script>
         // Initialize the widget after DOM is loaded
         document.addEventListener('DOMContentLoaded', function () {
             try {
                 window.ragChatbot = new RAGChatbotWidget({
-                    apiBaseUrl: 'https://ai-chat-bot-ote0.onrender.com', // Your backend URL
                     position: 'bottom-right'
                 });
                 console.log('RAG Chatbot Widget initialized successfully');

@@ -1,23 +1,17 @@
 {
   "name": "rag-chatbot-frontend",
   "version": "1.0.0",
-  "description": "RAG AI Chatbot Widget Frontend",
+  "description": "RAG AI Chatbot Frontend",
   "main": "index.html",
   "scripts": {
-    "build": "echo 'Static site - no build needed'",
+    "build": "echo 'Static files ready'",
     "start": "serve -s .",
-    "dev": "serve -s ."
+    "dev": "serve -s . -p 3000"
   },
   "dependencies": {
     "serve": "^14.0.0"
   },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yourusername/rag-chatbot-project.git"
-  },
-  "author": "Your Name",
+  "keywords": ["chatbot", "ai", "rag", "frontend"],
+  "author": "Harshit",
   "license": "MIT"
 }

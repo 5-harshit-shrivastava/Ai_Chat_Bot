@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: rag-chatbot-frontend
-    env: node
-    buildCommand: "npm install"
-    startCommand: "npm start"
-    plan: free
-    region: oregon
-    staticPublishPath: ./
