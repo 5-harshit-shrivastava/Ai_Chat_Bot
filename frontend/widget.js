@@ -1,25 +1,34 @@
 class RAGChatbotWidget {
     constructor(config = {}) {
-        this.config = {
-            apiBaseUrl: config.apiBaseUrl || this.getApiBaseUrl(),
-            position: config.position || 'bottom-right',
-            ...config
-        };
-        
-        this.isOpen = false;
-        this.isTyping = false;
-        this.recognition = null;
-        this.isListening = false;
-        
-        this.initializeElements();
-        this.bindEvents();
-        this.initializeSpeechRecognition();
+        try {
+            this.config = {
+                apiBaseUrl: config.apiBaseUrl || this.getApiBaseUrl(),
+                position: config.position || 'bottom-right',
+                ...config
+            };
+
+            this.isOpen = false;
+            this.isTyping = false;
+            this.recognition = null;
+            this.isListening = false;
+
+            console.log('Initializing RAG Chatbot Widget with config:', this.config);
+
+            this.initializeElements();
+            this.bindEvents();
+            this.initializeSpeechRecognition();
+
+            console.log('RAG Chatbot Widget initialized successfully');
+        } catch (error) {
+            console.error('Error initializing RAG Chatbot Widget:', error);
+            throw error;
+        }
     }
 
     getApiBaseUrl() {
         // Auto-detect API URL based on environment
         const hostname = window.location.hostname;
-        
+
         if (hostname === 'localhost' || hostname === '127.0.0.1') {
             return 'http://localhost:8000';
         } else {
@@ -44,7 +53,7 @@ class RAGChatbotWidget {
         this.closeBtn.addEventListener('click', () => this.closeWidget());
         this.sendBtn.addEventListener('click', () => this.sendMessage());
         this.voiceBtn.addEventListener('click', () => this.toggleVoiceInput());
-        
+
         this.inputField.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -116,7 +125,7 @@ class RAGChatbotWidget {
 
     startListening() {
         if (!this.recognition) return;
-        
+
         this.isListening = true;
         this.voiceBtn.style.background = '#ff4444';
         this.inputField.placeholder = 'Listening...';
@@ -139,9 +148,9 @@ class RAGChatbotWidget {
         this.addMessage(message, 'user');
         this.inputField.value = '';
         this.sendBtn.classList.remove('active');
-        
+
         this.showTyping();
-        
+
         try {
             const response = await fetch(`${this.config.apiBaseUrl}/chat`, {
                 method: 'POST',
@@ -152,7 +161,7 @@ class RAGChatbotWidget {
             });
 
             const data = await response.json();
-            
+
             if (response.ok) {
                 this.hideTyping();
                 this.addMessage(data.response, 'bot');
@@ -170,14 +179,14 @@ class RAGChatbotWidget {
     addMessage(text, sender) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `rag-chatbot-message ${sender}`;
-        
+
         const contentDiv = document.createElement('div');
         contentDiv.className = 'rag-chatbot-message-content';
         contentDiv.textContent = text;
-        
+
         messageDiv.appendChild(contentDiv);
         this.messages.insertBefore(messageDiv, this.typing);
-        
+
         this.scrollToBottom();
     }
 
@@ -200,7 +209,7 @@ class RAGChatbotWidget {
 }
 
 // Initialize the widget when the page loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // You can customize the configuration here
     window.ragChatbot = new RAGChatbotWidget({
         // apiBaseUrl will be auto-detected by getApiBaseUrl() method
